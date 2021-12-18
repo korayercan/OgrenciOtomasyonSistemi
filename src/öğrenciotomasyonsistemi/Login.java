@@ -5,9 +5,7 @@
  */
 package öğrenciotomasyonsistemi;
 
-import java.awt.Component;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
 
 /**
  *
