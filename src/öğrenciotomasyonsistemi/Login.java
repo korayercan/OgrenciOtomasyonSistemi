@@ -5,6 +5,10 @@
  */
 package öğrenciotomasyonsistemi;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -83,6 +87,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Şifre:");
+
+        fld_okulno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fld_okulnoActionPerformed(evt);
+            }
+        });
 
         fld_ogrsifre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,22 +289,97 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_fld_ogrsifreActionPerformed
 
     private void jButton_loginogrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginogrActionPerformed
-        this.dispose();
-        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
-        dashboardogr.setVisible(true);
+        Connection baglanti=null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+                JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
+            }
+            else{
+                Statement stat = baglanti.createStatement();
+                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
+                while(set.next()){
+                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                        this.dispose();
+                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        dashboardogr.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Okul no veya şifre yanlış.");
+                    }
+                }
+            }
+            
+            baglanti.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "bağlantıda hata!.");
+        }
+    
+        
     }//GEN-LAST:event_jButton_loginogrActionPerformed
 
     private void jButton_loginogretmenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginogretmenActionPerformed
-        this.dispose();
-        Dashboard_Ogretmen dashboardogret = new Dashboard_Ogretmen();
-        dashboardogret.setVisible(true);
+       Connection baglanti=null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+                JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
+            }
+            else{
+                Statement stat = baglanti.createStatement();
+                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
+                while(set.next()){
+                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                        this.dispose();
+                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        dashboardogr.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Okul no veya şifre yanlış.");
+                    }
+                }
+            }
+            
+            baglanti.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "bağlantıda hata!.");
+        }
     }//GEN-LAST:event_jButton_loginogretmenActionPerformed
 
     private void jButton_loginpersonelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginpersonelActionPerformed
-        this.dispose();
-        Dashboard_personel dashboardper = new Dashboard_personel();
-        dashboardper.setVisible(true);
+        Connection baglanti=null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+                JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
+            }
+            else{
+                Statement stat = baglanti.createStatement();
+                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
+                while(set.next()){
+                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                        this.dispose();
+                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        dashboardogr.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Okul no veya şifre yanlış.");
+                    }
+                }
+            }
+            
+            baglanti.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "bağlantıda hata!.");
+        }
     }//GEN-LAST:event_jButton_loginpersonelActionPerformed
+
+    private void fld_okulnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fld_okulnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fld_okulnoActionPerformed
 
     /**
      * @param args the command line arguments

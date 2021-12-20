@@ -208,6 +208,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fld_okulno">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fld_okulnoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fld_ogrsifre">
                   <Events>
