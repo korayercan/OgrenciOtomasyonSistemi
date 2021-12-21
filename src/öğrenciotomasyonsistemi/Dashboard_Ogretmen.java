@@ -10,12 +10,13 @@ package öğrenciotomasyonsistemi;
  * @author user
  */
 public class Dashboard_Ogretmen extends javax.swing.JFrame {
-
+    static Ogretmen ogretmen;
     /**
      * Creates new form Dashboard_Ogretmen
      */
-    public Dashboard_Ogretmen() {
+    public Dashboard_Ogretmen(Ogretmen ogretmen) {
         initComponents();
+        this.ogretmen = ogretmen ;
     }
 
     /**
@@ -255,7 +256,7 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboard_Ogretmen().setVisible(true);
+                new Dashboard_Ogretmen(ogretmen).setVisible(true);
             }
         });
     }

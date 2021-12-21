@@ -300,8 +300,9 @@ public class Login extends javax.swing.JFrame {
                 ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
                 while(set.next()){
                     if(fld_okulno.getText().equals(set.getString("OKUL_NO")) && fld_ogrsifre.getText().equals(set.getString("PASSWORD"))){
+                        Ogrenci ogrenci = new Ogrenci(set.getString("OKUL_NO"),set.getString("NAME"),set.getString("PASSWORD"),set.getString("CLASS"));
                         this.dispose();
-                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr(ogrenci);
                         dashboardogr.setVisible(true);
                     }
                     else{
@@ -331,8 +332,9 @@ public class Login extends javax.swing.JFrame {
                 ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRETMEN");
                 while(set.next()){
                     if(fld_ogrettc.getText().equals(set.getString("TC_NO")) && fld_ogretsifre.getText().equals(set.getString("PASSWORD"))){
+                        Ogretmen ogretmen = new Ogretmen(set.getString("TC_NO"),set.getString("NAME"),set.getString("PASSWORD"));
                         this.dispose();
-                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        Dashboard_Ogretmen dashboardogr = new Dashboard_Ogretmen(ogretmen);
                         dashboardogr.setVisible(true);
                     }
                     else{
@@ -361,7 +363,7 @@ public class Login extends javax.swing.JFrame {
                 while(set.next()){
                     if(fld_personeltc.getText().equals(set.getString("TC_NO")) && fld_personelsifre.getText().equals(set.getString("PASSWORD"))){
                         this.dispose();
-                        Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
+                        Dashboard_personel dashboardogr = new Dashboard_personel();
                         dashboardogr.setVisible(true);
                     }
                     else{

@@ -10,12 +10,16 @@ package öğrenciotomasyonsistemi;
  * @author user
  */
 public class Dashboard_Ogr extends javax.swing.JFrame {
-
+    static Ogrenci ogrenci;
     /**
      * Creates new form Dashboard_Ogr
+     * @param ogrenci
      */
-    public Dashboard_Ogr() {
+    public Dashboard_Ogr(Ogrenci ogrenci) {
         initComponents();
+        this.ogrenci = ogrenci;
+        jLabel_hos.setText("Hoşgeldin "+ogrenci.name);
+        
     }
 
     /**
@@ -150,7 +154,7 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addGap(0, 677, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +269,7 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboard_Ogr().setVisible(true);
+                new Dashboard_Ogr(ogrenci).setVisible(true);
             }
         });
     }
