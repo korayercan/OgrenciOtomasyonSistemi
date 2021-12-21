@@ -299,7 +299,7 @@ public class Login extends javax.swing.JFrame {
                 Statement stat = baglanti.createStatement();
                 ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
                 while(set.next()){
-                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                    if(fld_okulno.getText().equals(set.getString("OKUL_NO")) && fld_ogrsifre.getText().equals(set.getString("PASSWORD"))){
                         this.dispose();
                         Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
                         dashboardogr.setVisible(true);
