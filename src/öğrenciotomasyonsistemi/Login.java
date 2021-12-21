@@ -323,20 +323,20 @@ public class Login extends javax.swing.JFrame {
        Connection baglanti=null;
         try {
             baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
-            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+            if(fld_ogrettc.getText().length() == 0 || fld_ogretsifre.getText().length() == 0){
                 JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
             }
             else{
                 Statement stat = baglanti.createStatement();
-                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
+                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRETMEN");
                 while(set.next()){
-                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                    if(fld_ogrettc.getText().equals(set.getString("TC_NO")) && fld_ogretsifre.getText().equals(set.getString("PASSWORD"))){
                         this.dispose();
                         Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
                         dashboardogr.setVisible(true);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null,"Okul no veya şifre yanlış.");
+                        JOptionPane.showMessageDialog(null,"TC no veya şifre yanlış.");
                     }
                 }
             }
@@ -352,20 +352,20 @@ public class Login extends javax.swing.JFrame {
         Connection baglanti=null;
         try {
             baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
-            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+            if(fld_personeltc.getText().length() == 0 || fld_personelsifre.getText().length() == 0){
                 JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
             }
             else{
                 Statement stat = baglanti.createStatement();
-                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
+                ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.PERSONEL");
                 while(set.next()){
-                    if(fld_okulno.getText().equals(set.getString(4)) && fld_ogrsifre.getText().equals(set.getString(3))){
+                    if(fld_personeltc.getText().equals(set.getString("TC_NO")) && fld_personelsifre.getText().equals(set.getString("PASSWORD"))){
                         this.dispose();
                         Dashboard_Ogr dashboardogr = new Dashboard_Ogr();
                         dashboardogr.setVisible(true);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null,"Okul no veya şifre yanlış.");
+                        JOptionPane.showMessageDialog(null,"TC no veya şifre yanlış.");
                     }
                 }
             }
