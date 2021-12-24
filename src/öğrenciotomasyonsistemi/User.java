@@ -14,7 +14,7 @@ public abstract class User {
     public String name;
     
     public String getPrimary(){
-        return this.password;
+        return this.primary;
     }
     public void setPrimary(String primary){
         this.primary = primary;

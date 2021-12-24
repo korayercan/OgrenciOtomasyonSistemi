@@ -362,8 +362,9 @@ public class Login extends javax.swing.JFrame {
                 ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.PERSONEL");
                 while(set.next()){
                     if(fld_personeltc.getText().equals(set.getString("TC_NO")) && fld_personelsifre.getText().equals(set.getString("PASSWORD"))){
+                        Personel personel = new Personel(set.getString("TC_NO"),set.getString("NAME"),set.getString("PASSWORD"));
                         this.dispose();
-                        Dashboard_personel dashboardogr = new Dashboard_personel();
+                        Dashboard_personel dashboardogr = new Dashboard_personel(personel);
                         dashboardogr.setVisible(true);
                     }
                     else{

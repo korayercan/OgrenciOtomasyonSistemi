@@ -6,6 +6,7 @@
 package öğrenciotomasyonsistemi;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 
 
@@ -35,15 +36,17 @@ public class Ogrenci extends User implements BilgiCek,DuyuruGormeGirme {
     }
 
     @Override
-    public String duyurugorme() {
+    public String[] duyurugorme() {
 
         return null;
 
     }
 
     @Override
-    public void duyurugirme() {
+    public boolean duyurugirme(String yapan, String title, String text) {
         //erişilemez
+        return false;
+        
     }
 
     

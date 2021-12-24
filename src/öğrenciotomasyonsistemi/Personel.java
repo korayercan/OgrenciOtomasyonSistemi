@@ -5,6 +5,14 @@
  */
 package öğrenciotomasyonsistemi;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 /**
@@ -26,15 +34,27 @@ public class Personel extends User implements BilgiCek,DuyuruGormeGirme {
     }
 
     @Override
-    public String duyurugorme() {
+    public String[] duyurugorme() {
 
         return null;
 
     }
 
     @Override
-    public void duyurugirme() {
-
+    public boolean duyurugirme(String yapan, String title, String text) {
+        Connection baglanti = null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement eklesorgu=null;
+            eklesorgu=baglanti.createStatement();
+            eklesorgu.executeUpdate("INSERT INTO DUYURULAR(YAPAN_ID,TITLE,TEXT)values('"+yapan+ "' , '"+title+"', '"+text+"')");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_personel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
+    
+    
     
 }
