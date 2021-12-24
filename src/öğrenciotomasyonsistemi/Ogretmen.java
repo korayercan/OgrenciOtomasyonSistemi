@@ -45,7 +45,7 @@ public class Ogretmen extends User implements BilgiCek,NotGormeGirme,DuyuruGorme
 
     @Override
     public String[] duyurugorme() {
-        String array[] = null;
+        String array[] = new String[100];
         Connection baglanti = null;
         int i = 0;
         try {
@@ -53,8 +53,8 @@ public class Ogretmen extends User implements BilgiCek,NotGormeGirme,DuyuruGorme
             Statement stat = baglanti.createStatement();
             ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.DUYURULAR");
             while(set.next()){
-                String baslik = set.getString("TITLE");
-                String icerik = set.getString("TEXT");
+                String baslik = set.getString(2);
+                String icerik = set.getString(3);
                 array[i]=baslik;
                 array[++i]=icerik;
                 i++;

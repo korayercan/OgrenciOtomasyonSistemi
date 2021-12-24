@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,30 +30,40 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     public Dashboard_Ogretmen(Ogretmen ogretmen) {
         initComponents();
         this.ogretmen = ogretmen ;
-        //this.arrduy=ogretmen.duyurugorme();
+        this.arrduy=ogretmen.duyurugorme();
         jLabel_hos.setText("Hoşgeldin "+ogretmen.name);
         ogr_list();
-        //duy_gor();
+        duy_gor();
     } 
-    /* hata alıyorum duyurugorme den set boş geliyor
+    /* hata alıyorum duyurugorme den array boş geliyor*/
     public void duy_gor(){
         int i;
         int arrayLength=arrduy.length;  
         for(i = 0; i < arrayLength ; i++){   
-            int margin_top = 200;
-            int y = 15 + (margin_top + 75)*i+margin_top;
-            int y1 = y + margin_top;
+            int y = 15 + 50*i;
+            int y1 = y + 25;
             
             JLabel basliklabel = new JLabel();
             basliklabel.setFont(new java.awt.Font("Tahoma",0,13));
             basliklabel.setText(arrduy[i]);
             i++;
-            basliklabel.setBounds(20,y1,300,30);
+            basliklabel.setBounds(20,y,300,30);
             
+            JTextArea aciklamalabel = new JTextArea();
+            aciklamalabel.setFont(new java.awt.Font("Tahoma",0,13));
+            aciklamalabel.setText(arrduy[i]);
+            aciklamalabel.setBounds(20, y1, 300, 30);
+            aciklamalabel.setEditable(false);
+            aciklamalabel.setOpaque(false);
+            aciklamalabel.setFocusable(false);
+            aciklamalabel.setWrapStyleWord(true);
+            aciklamalabel.setLineWrap(true);
+            aciklamalabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
             jPanel11.add(basliklabel);
+            jPanel11.add(aciklamalabel);
         }
     }
-    */
+    
     public void ogr_list(){
         Connection baglanti = null;
         try {
@@ -168,7 +179,7 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                         .addComponent(jButton_sifredeg)
                         .addGap(64, 64, 64))
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -294,21 +305,17 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         w_tabpane.addTab("Duyurular", jPanel4);
@@ -320,11 +327,11 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
+            .addGap(0, 697, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+            .addGap(0, 314, Short.MAX_VALUE)
         );
 
         w_tabpane.addTab("Haftalık Dersler", jPanel2);
@@ -335,11 +342,11 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
+            .addGap(0, 697, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+            .addGap(0, 314, Short.MAX_VALUE)
         );
 
         w_tabpane.addTab("Sınavlar", jPanel5);
@@ -386,14 +393,14 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -417,7 +424,7 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
                         .addComponent(jLabel_hos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_cikis))
-                    .addComponent(w_tabpane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE))
+                    .addComponent(w_tabpane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -428,7 +435,7 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
                     .addComponent(jLabel_hos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_cikis))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(w_tabpane, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(w_tabpane, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
