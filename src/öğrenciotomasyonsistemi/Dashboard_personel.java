@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,13 +27,43 @@ public class Dashboard_personel extends javax.swing.JFrame {
      * Creates new form Dashboard_personel
      */
     static Personel personel;
+    String arrduy[];
     
     public Dashboard_personel(Personel personel) {
         initComponents();
         this.personel=personel;
+        this.arrduy=personel.duyurugorme();
         jLabel_hos.setText("Hoşgeldin "+personel.name);
         ogr_list();
         ogret_list();
+        duy_gor();
+    }
+    public void duy_gor(){
+        int i;
+        int arrayLength=arrduy.length;  
+        for(i = 0; i < arrayLength ; i++){   
+            int y = 15 + 50*i;
+            int y1 = y + 25;
+            
+            JLabel basliklabel = new JLabel();
+            basliklabel.setFont(new java.awt.Font("Tahoma",0,13));
+            basliklabel.setText(arrduy[i]);
+            i++;
+            basliklabel.setBounds(20,y,300,30);
+            
+            JTextArea aciklamalabel = new JTextArea();
+            aciklamalabel.setFont(new java.awt.Font("Tahoma",0,13));
+            aciklamalabel.setText(arrduy[i]);
+            aciklamalabel.setBounds(20, y1, 300, 30);
+            aciklamalabel.setEditable(false);
+            aciklamalabel.setOpaque(false);
+            aciklamalabel.setFocusable(false);
+            aciklamalabel.setWrapStyleWord(true);
+            aciklamalabel.setLineWrap(true);
+            aciklamalabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+            jPanel6.add(basliklabel);
+            jPanel6.add(aciklamalabel);
+        }
     }
     
     public void ogret_list(){
@@ -87,9 +119,9 @@ public class Dashboard_personel extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton_sifredeg1 = new javax.swing.JButton();
+        jButton_sifredeg = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jPassword_yeni = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jPasswordField3 = new javax.swing.JPasswordField();
         jPanel4 = new javax.swing.JPanel();
@@ -102,6 +134,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton_duygir = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_ogr = new javax.swing.JTable();
@@ -128,7 +161,12 @@ public class Dashboard_personel extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Yeni Şifre:");
 
-        jButton_sifredeg1.setText("Onayla");
+        jButton_sifredeg.setText("Onayla");
+        jButton_sifredeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_sifredegActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Yeni Şifre Onay:");
@@ -140,7 +178,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton_sifredeg1)
+                    .addComponent(jButton_sifredeg)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
@@ -150,7 +188,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -167,9 +205,9 @@ public class Dashboard_personel extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(jButton_sifredeg1)
+                        .addComponent(jButton_sifredeg)
                         .addGap(64, 64, 64))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -254,15 +292,28 @@ public class Dashboard_personel extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 262, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Duyuruları Gör", jPanel8);
@@ -271,7 +322,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,7 +458,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
                         .addComponent(jLabel_hos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_cikis))
-                    .addComponent(w_tabpane, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
+                    .addComponent(w_tabpane))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -454,6 +505,21 @@ public class Dashboard_personel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Duyuru eklenirken bir hata oluştu!!");
         }
     }//GEN-LAST:event_jButton_duygirActionPerformed
+//ŞİFRE DEĞİTİRME HATA ALIYORUM
+    private void jButton_sifredegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_sifredegActionPerformed
+        // TODO add your handling code here:
+        Connection baglanti = null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement eklesorgu=null;
+            eklesorgu=baglanti.createStatement();
+            eklesorgu.executeUpdate("UPDATE ADMIN.PERSONEL SET PASSWORD='"+ jPassword_yeni.toString() +"' WHERE TC_NO='"+ personel.getPrimary() +"'" );
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_personel.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+    }//GEN-LAST:event_jButton_sifredegActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,7 +559,7 @@ public class Dashboard_personel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_cikis;
     private javax.swing.JButton jButton_duygir;
-    private javax.swing.JButton jButton_sifredeg1;
+    private javax.swing.JButton jButton_sifredeg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -506,12 +572,13 @@ public class Dashboard_personel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
+    private javax.swing.JPasswordField jPassword_yeni;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -10,12 +10,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -34,8 +34,25 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jLabel_hos.setText("Hoşgeldin "+ogretmen.name);
         ogr_list();
         duy_gor();
+        ders_cek();
     } 
-    /* hata alıyorum duyurugorme den array boş geliyor*/
+    public void ders_cek(){
+        Vector comboBoxItems = new Vector();
+        try {
+            Connection baglanti=null;
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            
+            Statement stat = baglanti.createStatement();
+            ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.DERSLER");
+            while(set.next()){
+                comboBoxItems.add(set.getString("NAME"));
+            }
+            final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+            jComboBox_ders.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_Ogretmen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void duy_gor(){
         int i;
         int arrayLength=arrduy.length;  
@@ -116,6 +133,15 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox_ders = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jTextField_ogrnum = new javax.swing.JTextField();
+        jTextField_yuzde = new javax.swing.JTextField();
+        jTextField_not = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_ogr = new javax.swing.JTable();
@@ -338,15 +364,78 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel5.setText("Ders :");
+
+        jLabel6.setText("Öğrenci Numarası :");
+
+        jLabel9.setText("Sınav Yüzdesi (50,20..):");
+
+        jLabel10.setText("Not : ");
+
+        jComboBox_ders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_dersActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("KAYIT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTextField_yuzde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_yuzdeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox_ders, 0, 89, Short.MAX_VALUE)
+                    .addComponent(jTextField_ogrnum)
+                    .addComponent(jTextField_yuzde)
+                    .addComponent(jTextField_not))
+                .addContainerGap(317, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(189, 189, 189))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox_ders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField_ogrnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_yuzde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextField_not, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         w_tabpane.addTab("Sınavlar", jPanel5);
@@ -472,6 +561,31 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_duygir1ActionPerformed
 
+    private void jTextField_yuzdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_yuzdeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_yuzdeActionPerformed
+
+    private void jComboBox_dersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_dersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_dersActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(jTextField_ogrnum.getText().length() == 0 || jTextField_yuzde.getText().length() == 0 || jTextField_not.getText().length() == 0){
+            JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
+        }
+        String ders = String.valueOf(jComboBox_ders.getSelectedItem());
+        String ogrno = jTextField_ogrnum.getText();
+        String yuzde = jTextField_yuzde.getText();
+        String not = jTextField_not.getText();
+        if(ogretmen.notgirme(ders, ogrno, yuzde, not)){
+            JOptionPane.showMessageDialog(null,"Başarılı bir şekilde not kaydedildi.");
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Beklenmeyen bir hata oluştu.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -508,15 +622,21 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_cikis;
     private javax.swing.JButton jButton_duygir1;
     private javax.swing.JButton jButton_sifredeg;
+    private javax.swing.JComboBox<String> jComboBox_ders;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_hos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -535,6 +655,9 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextArea_duyogret;
     private javax.swing.JTextField jTextField_duybasogret;
+    private javax.swing.JTextField jTextField_not;
+    private javax.swing.JTextField jTextField_ogrnum;
+    private javax.swing.JTextField jTextField_yuzde;
     private javax.swing.JTable table_ogr;
     private javax.swing.JTabbedPane w_tabpane;
     // End of variables declaration//GEN-END:variables

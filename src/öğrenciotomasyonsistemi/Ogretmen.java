@@ -39,7 +39,19 @@ public class Ogretmen extends User implements BilgiCek,NotGormeGirme,DuyuruGorme
     }
 
     @Override
-    public void notgirme(Connection myConnection) {
+    public boolean notgirme(String ders,String ogrno,String yuzde,String not) {
+        Connection baglanti = null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement eklesorgu=null;
+            eklesorgu=baglanti.createStatement();
+            eklesorgu.executeUpdate("INSERT INTO NOTLAR(OGR_NO,DERS,YUZDE,SONUC)values('"+ogrno+ "' , '"+ders+"', '"+yuzde+"', '"+not+"')");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_personel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+       
 
     }
 

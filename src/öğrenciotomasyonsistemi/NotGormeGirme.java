@@ -8,5 +8,5 @@ import java.sql.Connection;
  */
 public interface NotGormeGirme {
     public String notgorme(Connection myConnection);
-    public void notgirme(Connection myConnection);
+    public boolean notgirme(String ders,String ogrno,String yuzde,String not);
 }
