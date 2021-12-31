@@ -44,8 +44,8 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         fld_okulno = new javax.swing.JTextField();
-        fld_ogrsifre = new javax.swing.JTextField();
         jButton_loginogr = new javax.swing.JButton();
+        fld_ogrsifre = new javax.swing.JPasswordField();
         jPanel3 = new javax.swing.JPanel();
         fld_ogretsifre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -94,12 +94,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        fld_ogrsifre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fld_ogrsifreActionPerformed(evt);
-            }
-        });
-
         jButton_loginogr.setText("Giriş");
         jButton_loginogr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
+                .addContainerGap(128, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton_loginogr)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -120,9 +114,9 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(fld_okulno, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fld_ogrsifre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fld_okulno, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(fld_ogrsifre))))
                 .addGap(93, 93, 93))
         );
         jPanel2Layout.setVerticalGroup(
@@ -132,13 +126,13 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(fld_okulno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(fld_ogrsifre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fld_ogrsifre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton_loginogr)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         w_tabpane.addTab("Öğrenci", jPanel2);
@@ -284,22 +278,19 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fld_ogrsifreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fld_ogrsifreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fld_ogrsifreActionPerformed
-
     private void jButton_loginogrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginogrActionPerformed
         Connection baglanti=null;
+        String password = String.valueOf(fld_ogrsifre.getPassword());
         try {
             baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
-            if(fld_okulno.getText().length() == 0 || fld_ogrsifre.getText().length() == 0){
+            if(fld_okulno.getText().length() == 0 || password.length() == 0){
                 JOptionPane.showMessageDialog(null,"Lütfen Gerekli Alanları Doldurunuz");
             }
             else{
                 Statement stat = baglanti.createStatement();
                 ResultSet set = stat.executeQuery("SELECT * FROM ADMIN.OGRENCİ");
                 while(set.next()){
-                    if(fld_okulno.getText().equals(set.getString("OKUL_NO")) && fld_ogrsifre.getText().equals(set.getString("PASSWORD"))){
+                    if(fld_okulno.getText().equals(set.getString("OKUL_NO")) && password.equals(set.getString("PASSWORD"))){
                         Ogrenci ogrenci = new Ogrenci(set.getString("OKUL_NO"),set.getString("NAME"),set.getString("PASSWORD"),set.getString("CLASS"));
                         this.dispose();
                         Dashboard_Ogr dashboardogr = new Dashboard_Ogr(ogrenci);
@@ -422,7 +413,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fld_ogretsifre;
     private javax.swing.JTextField fld_ogrettc;
-    private javax.swing.JTextField fld_ogrsifre;
+    private javax.swing.JPasswordField fld_ogrsifre;
     private javax.swing.JTextField fld_okulno;
     private javax.swing.JTextField fld_personelsifre;
     private javax.swing.JTextField fld_personeltc;
