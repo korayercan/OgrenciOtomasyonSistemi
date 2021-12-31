@@ -35,7 +35,25 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         ogr_list();
         duy_gor();
         ders_cek();
-    } 
+        ders_list();
+    }
+    public void ders_list(){
+        Connection baglanti = null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement showstate=baglanti.createStatement();
+            ResultSet myrs2=showstate.executeQuery("SELECT * FROM ADMIN.DERSLER WHERE OGRETMEN_NO ='"+ogretmen.getPrimary()+"'");
+            DefaultTableModel tablomodelim=(DefaultTableModel)table_dersprog.getModel();
+            tablomodelim.setRowCount(0);
+            while(myrs2.next()){
+                Object objem[] ={myrs2.getString(1),myrs2.getString(3),myrs2.getString(4),myrs2.getString(5)};
+                tablomodelim.addRow(objem);
+            }
+            baglanti.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_Ogretmen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void ders_cek(){
         Vector comboBoxItems = new Vector();
         try {
@@ -117,10 +135,8 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton_sifredeg = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
+        jPasswordField = new javax.swing.JPasswordField();
+        jPassword_yeni = new javax.swing.JPasswordField();
         jPanel4 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel10 = new javax.swing.JPanel();
@@ -132,6 +148,8 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jButton_duygir1 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_dersprog = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -166,55 +184,48 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jLabel3.setText("Yeni Şifre:");
 
         jButton_sifredeg.setText("Onayla");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Yeni Şifre Onay:");
+        jButton_sifredeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_sifredegActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton_sifredeg)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                        .addComponent(jButton_sifredeg)
-                        .addGap(64, 64, 64))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(55, 55, 55)
+                .addComponent(jButton_sifredeg)
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -349,15 +360,44 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
+        table_dersprog.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Ders", "Gün", "Başlangıç", "Bitiş"
+            }
+        ));
+        jScrollPane3.setViewportView(table_dersprog);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         w_tabpane.addTab("Haftalık Dersler", jPanel2);
@@ -586,6 +626,29 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton_sifredegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_sifredegActionPerformed
+        // TODO add your handling code here:
+        Connection baglanti = null;
+        String oldpassword = String.valueOf(jPasswordField.getPassword());
+        String password = String.valueOf(jPassword_yeni.getPassword());
+        if(oldpassword != ogretmen.getPassword()){
+            JOptionPane.showMessageDialog(null,"Şifreniz hatalı.");
+        }
+        else{
+            try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement eklesorgu=null;
+            eklesorgu=baglanti.createStatement();
+            eklesorgu.executeUpdate("UPDATE ADMIN.OGRETMEN SET PASSWORD='"+ password +"' WHERE TC_NO='"+ ogretmen.getPrimary() +"'" );
+            JOptionPane.showMessageDialog(null,"Şifre yenileme işlemi başarılı.");
+            } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_Ogretmen.class.getName()).log(Level.SEVERE, null, ex);
+            
+            }
+        }
+        
+    }//GEN-LAST:event_jButton_sifredegActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -627,7 +690,6 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     private javax.swing.JButton jButton_duygir1;
     private javax.swing.JButton jButton_sifredeg;
     private javax.swing.JComboBox<String> jComboBox_ders;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -647,10 +709,10 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
+    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JPasswordField jPassword_yeni;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextArea_duyogret;
@@ -658,6 +720,7 @@ public class Dashboard_Ogretmen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_not;
     private javax.swing.JTextField jTextField_ogrnum;
     private javax.swing.JTextField jTextField_yuzde;
+    private javax.swing.JTable table_dersprog;
     private javax.swing.JTable table_ogr;
     private javax.swing.JTabbedPane w_tabpane;
     // End of variables declaration//GEN-END:variables

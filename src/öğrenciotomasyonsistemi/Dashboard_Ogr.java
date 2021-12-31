@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,8 +33,29 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         this.ogrenci = ogrenci;
         this.arrduy=ogrenci.duyurugorme();
         jLabel_hos.setText("Hoşgeldin "+ogrenci.name);
+        trans_ad.setText("Ad-Soyad: "+ogrenci.name);
+        trans_okulno.setText("Okul No : "+ogrenci.getPrimary());
+        trans_class.setText("Sınıf   : "+ogrenci.sinif);
         duy_gor();
         not_list();
+        ders_list();
+    }
+    public void ders_list(){
+        Connection baglanti = null;
+        try {
+            baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+            Statement showstate=baglanti.createStatement();
+            ResultSet myrs2=showstate.executeQuery("SELECT * FROM ADMIN.DERSLER");
+            DefaultTableModel tablomodelim=(DefaultTableModel)table_dersprog.getModel();
+            tablomodelim.setRowCount(0);
+            while(myrs2.next()){
+                Object objem[] ={myrs2.getString(1),myrs2.getString(3),myrs2.getString(4),myrs2.getString(5)};
+                tablomodelim.addRow(objem);
+            }
+            baglanti.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard_Ogretmen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void not_list(){
         Connection baglanti = null;
@@ -43,10 +65,13 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
             Statement showstate=baglanti.createStatement();
             ResultSet myrs2=showstate.executeQuery("SELECT * FROM ADMIN.NOTLAR WHERE OGR_NO = '"+ ogr_no +"'");
             DefaultTableModel tablomodelim=(DefaultTableModel)table_not.getModel();
+            DefaultTableModel tablomodelim2=(DefaultTableModel)table_not1.getModel();
             tablomodelim.setRowCount(0);
+            tablomodelim2.setRowCount(0);
             while(myrs2.next()){
                 Object objem[] ={myrs2.getString(2),myrs2.getString(3),myrs2.getString(4)};
                 tablomodelim.addRow(objem);
+                tablomodelim2.addRow(objem);
             }
             baglanti.close();
         } catch (SQLException ex) {
@@ -99,12 +124,11 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton_sifredeg1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
-        jPanel4 = new javax.swing.JPanel();
+        jPasswordField = new javax.swing.JPasswordField();
+        jPassword_yeni = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_dersprog = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -113,6 +137,11 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table_not = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_not1 = new javax.swing.JTable();
+        trans_ad = new javax.swing.JLabel();
+        trans_okulno = new javax.swing.JLabel();
+        trans_class = new javax.swing.JLabel();
         jButton_cikis = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -135,29 +164,29 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         jLabel9.setText("Yeni Şifre:");
 
         jButton_sifredeg1.setText("Onayla");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Yeni Şifre Onay:");
+        jButton_sifredeg1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_sifredeg1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton_sifredeg1)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -166,24 +195,17 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                        .addComponent(jButton_sifredeg1)
-                        .addGap(64, 64, 64))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPassword_yeni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(44, 44, 44)
+                .addComponent(jButton_sifredeg1)
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -201,32 +223,46 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
 
         w_tabpane.addTab("Hesap", jPanel3);
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
-        );
-
-        w_tabpane.addTab("Ders Seçimi", jPanel4);
-
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        table_dersprog.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Ders", "Gün", "Başlangıç", "Bitiş"
+            }
+        ));
+        jScrollPane3.setViewportView(table_dersprog);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         w_tabpane.addTab("Ders Programı", jPanel5);
@@ -305,15 +341,63 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
+        table_not1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Ders", "Yüzde", "Sonuç"
+            }
+        ));
+        jScrollPane2.setViewportView(table_not1);
+
+        trans_ad.setText("Ad-Soyad:");
+
+        trans_okulno.setText("Okul No   :");
+
+        trans_class.setText("Sınıf         :");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(trans_ad, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addComponent(trans_okulno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(trans_class, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 286, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(trans_ad)
+                .addGap(18, 18, 18)
+                .addComponent(trans_okulno)
+                .addGap(18, 18, 18)
+                .addComponent(trans_class)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Transkript", jPanel10);
@@ -386,6 +470,29 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_jButton_cikisActionPerformed
 
+    private void jButton_sifredeg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_sifredeg1ActionPerformed
+        // TODO add your handling code here:
+        Connection baglanti = null;
+        String oldpassword = String.valueOf(jPasswordField.getPassword());
+        String password = String.valueOf(jPassword_yeni.getPassword());
+        if(oldpassword != ogrenci.getPassword()){
+            JOptionPane.showMessageDialog(null,"Şifreniz hatalı.");
+        }
+        else{
+            try {
+                baglanti=DriverManager.getConnection("jdbc:derby://localhost:1527/admin", "admin", "admin");
+                Statement eklesorgu=null;
+                eklesorgu=baglanti.createStatement();
+                eklesorgu.executeUpdate("UPDATE ADMIN.OGRENCİ SET PASSWORD='"+ password +"' WHERE TC_NO='"+ ogrenci.getPrimary() +"'" );
+                JOptionPane.showMessageDialog(null,"Şifre yenileme işlemi başarılı.");
+            } catch (SQLException ex) {
+                Logger.getLogger(Dashboard_Ogr.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        }
+
+    }//GEN-LAST:event_jButton_sifredeg1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,7 +531,6 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_cikis;
     private javax.swing.JButton jButton_sifredeg1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -433,18 +539,23 @@ public class Dashboard_Ogr extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
+    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JPasswordField jPassword_yeni;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable table_dersprog;
     private javax.swing.JTable table_not;
+    private javax.swing.JTable table_not1;
+    private javax.swing.JLabel trans_ad;
+    private javax.swing.JLabel trans_class;
+    private javax.swing.JLabel trans_okulno;
     private javax.swing.JTabbedPane w_tabpane;
     // End of variables declaration//GEN-END:variables
 }
